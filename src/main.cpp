@@ -8,14 +8,14 @@ namespace fs = std::filesystem;
 
 
 int count_in_file(const fs::path& path){
-    std::ifstream file(path);
+    ifstream file(path);
     if (!file.is_open()) {
-        std::cerr << "Error opening file: " << path << std::endl;
+        cerr << "Error opening file: " << path << endl;
         return -1;
     }
     int line_count = 0;
-    std::string line;
-    while (std::getline(file, line)){
+    string line;
+    while (getline(file, line)){
         line_count++;
     }
     file.close();
@@ -30,7 +30,7 @@ void process_directory(const fs::path& dir_path, int& total_lines){
         } else if (entry.path().extension() == ".py"){
             int linesInFile = count_in_file(entry.path());
             if (linesInFile >= 0){
-                std::cout << "File: " << entry.path() << ", Lines: " << linesInFile << std::endl;
+                cout << "File: " << entry.path() << ", Lines: " << linesInFile << endl;
                 total_lines += linesInFile;
             }
         }
@@ -51,10 +51,10 @@ int main(int argc, char const *argv[]){
     try{
         process_directory(path, totalLines);
 
-        std::cout << "Total lines in all .py files: " << totalLines << std::endl;
+        cout << "Total lines in all .py files: " << totalLines << endl;
     } 
-    catch (const std::exception& e){
-        std::cerr << "Error: " << e.what() << std::endl;
+    catch (const exception& e){
+        cerr << "Error: " << e.what() << endl;
         return 1;
     }
 
